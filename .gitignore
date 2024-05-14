@@ -1,0 +1,7 @@
+build
+*.o
+*.d
+*.so
+.vscode
+.idea
+syntax_analyzer
