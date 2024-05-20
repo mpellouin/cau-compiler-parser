@@ -1,0 +1,1 @@
+vtype id lparen vtype id comma vtype id rparen lbrace vtype id semi return id semi rbrace
