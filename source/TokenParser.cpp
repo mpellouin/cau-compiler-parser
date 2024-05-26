@@ -9,6 +9,11 @@ buparser::TokenParser::TokenParser(std::string filepath) : _filepath(filepath)
     DEBUG_MSG("buparser::TokenParser::TokenParser(" << filepath << ")");
 }
 
+buparser::TokenParser::~TokenParser()
+{
+    DEBUG_MSG("buparser::TokenParser::~TokenParser()");
+}
+
 std::queue<std::string> buparser::TokenParser::parse()
 {
     std::ifstream file = this->isFilepathValid();
@@ -20,6 +25,7 @@ std::queue<std::string> buparser::TokenParser::parse()
         this->parseLine(line);
         line_number++;
     }
+    this->_tokens.push("EOF");
     return this->_tokens;
 }
 

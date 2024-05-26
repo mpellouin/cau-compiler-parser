@@ -17,6 +17,7 @@ namespace buparser {
     class TokenParser {
         public:
             TokenParser(std::string filepath);
+            ~TokenParser();
             std::queue<std::string> parse();
 
     private:
