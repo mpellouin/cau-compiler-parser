@@ -269,7 +269,7 @@ public:
         {
             {TERMINAL::ID, {ActionType::SHIFT, 23}},
             {TERMINAL::LPAREN, {ActionType::SHIFT, 22}},
-            {TERMINAL::$, {ActionType::SHIFT, 24}},
+            {TERMINAL::NUM, {ActionType::SHIFT, 24}},
             {NONTERMINAL::EXPR, {ActionType::GOTO, 29}},
             {NONTERMINAL::TERM, {ActionType::GOTO, 20}},
             {NONTERMINAL::FACTOR, {ActionType::GOTO, 21}},
@@ -297,14 +297,14 @@ public:
         {
             {TERMINAL::ID, {ActionType::SHIFT, 23}},
             {TERMINAL::LPAREN, {ActionType::SHIFT, 22}},
-            {TERMINAL::$, {ActionType::SHIFT, 24}},
+            {TERMINAL::NUM, {ActionType::SHIFT, 24}},
             {NONTERMINAL::TERM, {ActionType::GOTO, 33}},
             {NONTERMINAL::FACTOR, {ActionType::GOTO, 21}},
         },
         {
             {TERMINAL::ID, {ActionType::SHIFT, 23}},
             {TERMINAL::LPAREN, {ActionType::SHIFT, 22}},
-            {TERMINAL::$, {ActionType::SHIFT, 24}},
+            {TERMINAL::NUM, {ActionType::SHIFT, 24}},
             {NONTERMINAL::FACTOR, {ActionType::GOTO, 34}},
         },
         {
@@ -384,7 +384,7 @@ public:
             {TERMINAL::CHARACTER, {ActionType::SHIFT, 18}},
             {TERMINAL::BOOLSTR, {ActionType::SHIFT, 19}},
             {TERMINAL::LPAREN, {ActionType::SHIFT, 22}},
-            {TERMINAL::$, {ActionType::SHIFT, 24}},
+            {TERMINAL::NUM, {ActionType::SHIFT, 24}},
             {NONTERMINAL::RHS, {ActionType::GOTO, 52}},
             {NONTERMINAL::EXPR, {ActionType::GOTO, 16}},
             {NONTERMINAL::TERM, {ActionType::GOTO, 20}},
@@ -519,6 +519,7 @@ public:
             {TERMINAL::RBRACE, {ActionType::REDUCE, 23}},
             {TERMINAL::IF, {ActionType::REDUCE, 23}},
             {TERMINAL::WHILE, {ActionType::REDUCE, 23}},
+            {TERMINAL::TERM_RETURN, {ActionType::REDUCE, 23}},
         },
         {
             {TERMINAL::VTYPE, {ActionType::REDUCE, 22}},
@@ -526,6 +527,7 @@ public:
             {TERMINAL::RBRACE, {ActionType::REDUCE, 22}},
             {TERMINAL::IF, {ActionType::REDUCE, 22}},
             {TERMINAL::WHILE, {ActionType::REDUCE, 22}},
+            {TERMINAL::TERM_RETURN, {ActionType::REDUCE, 22}},
         },
         {
             {TERMINAL::LBRACE, {ActionType::SHIFT, 74}},
@@ -549,6 +551,7 @@ public:
             {TERMINAL::RBRACE, {ActionType::REDUCE, 24}},
             {TERMINAL::IF, {ActionType::REDUCE, 24}},
             {TERMINAL::WHILE, {ActionType::REDUCE, 24}},
+            {TERMINAL::TERM_RETURN, {ActionType::REDUCE, 24}},
         }
     };
 
