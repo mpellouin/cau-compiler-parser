@@ -42,6 +42,7 @@ enum NONTERMINAL
     EXPR,
     TERM,
     FACTOR,
+    PROGRAM
 };
 enum TERMINAL
 {
@@ -410,7 +411,7 @@ public:
         },
         {
             {TERMINAL::BOOLSTR, {ActionType::SHIFT, 56}},
-            {NONTERMINAL::MORECOND, {ActionType::GOTO, 57}},
+            {NONTERMINAL::COND, {ActionType::GOTO, 57}},
         },
         {
             {TERMINAL::RPAREN, {ActionType::REDUCE, 17}},

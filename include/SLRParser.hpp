@@ -16,6 +16,7 @@
 #include "debug.hpp"
 #include "Config.hpp"
 #include "CFG.hpp"
+#include "ParseTreeNode.hpp"
 
 
 namespace buparser {
@@ -32,7 +33,7 @@ namespace buparser {
             std::stack<int> _states;
             int _currentIndex = 0;
             CFG *_cfg;
-
+            ParseTreeNode _parseTree {NONTERMINAL::PROGRAM};
     };
 }
 

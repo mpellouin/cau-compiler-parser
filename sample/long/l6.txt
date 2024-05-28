@@ -1,0 +1,1 @@
+vtype id semi vtype id assign character semi vtype id lparen rparen lbrace id assign id semi while lparen boolstr rparen lbrace id assign num semi rbrace return id semi rbrace

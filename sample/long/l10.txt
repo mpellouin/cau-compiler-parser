@@ -1,0 +1,1 @@
+vtype id semi vtype id lparen rparen lbrace id assign id addsub id semi if lparen boolstr rparen lbrace id assign id semi rbrace else lbrace id assign character semi rbrace return id semi rbrace
