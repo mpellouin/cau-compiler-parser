@@ -91,7 +91,7 @@ void buparser::SLRParser::validate(std::queue<std::string> input)
                 DEBUG_MSG("ParseTreeNode Children length: " << _parseTree.children.size());
 
                 // Remove the productionSize last states (going to be replaced by the goto-assigned state)
-                for (int i = 0; i < productionSize; i++) {
+                for (size_t i = 0; i < productionSize; i++) {
                     _states.pop();
                 }
 

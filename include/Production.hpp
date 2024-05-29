@@ -20,6 +20,7 @@ namespace buparser {
             ~Production();
 
             NONTERMINAL lhs;
+            // Queue of either NONTERMINAL or TERMINAL to represent the RHS of the production
             std::queue<std::variant<NONTERMINAL, TERMINAL>> rhs;
 
 

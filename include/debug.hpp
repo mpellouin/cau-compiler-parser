@@ -10,6 +10,7 @@
 
 #include <iostream>
 
+// Debug macro allowing to print debug messages only if the DEBUG flag is set
 #ifdef DEBUG
 #define DEBUG_MSG(str) do { std::cout << str << std::endl; } while( false )
 #else

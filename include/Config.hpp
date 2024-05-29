@@ -73,8 +73,23 @@ class Config {
 public:
     Config();
     ~Config();
+
+    /**
+     * @brief Get the Terminal from its corresponding string
+     * 
+     * @param terminal: the string to convert
+     * @return TERMINAL 
+     */
     TERMINAL getTerminal(std::string terminal);
+
+    /**
+     * @brief Get the Non Terminal from its corresponding string
+     * 
+     * @param nt: the string to convert
+     * @return NONTERMINAL 
+     */
     NONTERMINAL getNonTerminal(std::string nt);
+
     std::string terminalsStrings[21] = {
         "vtype",
         "id",
@@ -121,6 +136,8 @@ public:
         "FACTOR",
     };
 
+    // The productions as written in the CFG.
+    // Epsilon are represented by empty strings
     std::vector<std::pair<std::string, std::string>> productions = {
         {"CODE", "DECLINIT CODE"},
         {"CODE", ""},
@@ -161,6 +178,8 @@ public:
         {"FACTOR", "num"}
     };
 
+    // The representation of the SLR table
+    // One vector corresponding to each state, containing a map of the transitions possible with the corresponding actions
     std::vector<std::unordered_map<std::variant<NONTERMINAL, TERMINAL>, std::pair<ActionType, int>>> slrTable =
     {
         {

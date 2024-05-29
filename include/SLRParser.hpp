@@ -26,6 +26,11 @@ namespace buparser {
             SLRParser(CFG *cfg);
             ~SLRParser();
 
+            /**
+             * @brief Takes a queue of tokenStrings and validates them
+             * 
+             * @param input 
+             */
             void validate(std::queue<std::string> input);
 
         protected:
@@ -33,6 +38,7 @@ namespace buparser {
             std::stack<int> _states;
             int _currentIndex = 0;
             CFG *_cfg;
+            // Initialized as PROGRAM (corresponding to S' in a CFG with S' -> S)
             ParseTreeNode _parseTree {NONTERMINAL::PROGRAM};
     };
 }
