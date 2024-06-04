@@ -30,6 +30,7 @@ void buparser::SLRParser::validate(std::queue<std::string> input)
 
         // Get the first string token
         std::string tokenString = input.front();
+        this->_currentIndex++;
 
         try {
             // Try to get the token as a terminal
@@ -39,7 +40,7 @@ void buparser::SLRParser::validate(std::queue<std::string> input)
             try {
                 token = _cfg->config->getNonTerminal(tokenString);
             } catch (std::domain_error &e) {
-                throw std::domain_error(tokenString + ": unknown token");
+                throw std::domain_error("UnknownTokenError: encountered unknown token \"" + tokenString + "\" at position " + std::to_string(this->_currentIndex) + ".");
             }
         }
 
@@ -51,7 +52,7 @@ void buparser::SLRParser::validate(std::queue<std::string> input)
             // Throw if there is no transition (or multiple transitions, which would be a config error)
 
             // However as this is unlikely, we can throw the following exception description
-            throw std::domain_error("No transition for state " + std::to_string(state) + " and token " + tokenString);
+            throw std::domain_error(this->generateReport(state, tokenString));
         } else {
             // Get the action index pair from the slrTable
             std::pair<ActionType, int> action = _cfg->config->slrTable[state][token];
@@ -106,4 +107,25 @@ void buparser::SLRParser::validate(std::queue<std::string> input)
             }
         }
     }
+}
+
+std::string buparser::SLRParser::generateReport(int state, std::string tokenString)
+{
+    auto slrTable = _cfg->config->slrTable[state];
+    std::vector<std::string> keys;
+
+    // get all terminal keys from the table, we will use them to tell what were the expected transitions
+    for (auto const& [key, val] : slrTable) {
+        if (std::holds_alternative<TERMINAL>(key))
+            keys.push_back(this->_cfg->config->terminalsStrings[std::get<TERMINAL>(key)]);
+    }
+
+    // Concatenate the keys to get a readable report
+    std::string result = std::accumulate(std::next(keys.begin()), keys.end(), keys[0], [](const std::string& a, const std::string& b) {
+        return a + " | " + b;
+    });
+
+    std::string report = "Syntax Error (token " + std::to_string(this->_currentIndex) + "): Expected: " + result + " but got: " + tokenString + ".";
+
+    return report;
 }

@@ -26,17 +26,31 @@ void ParseTreeNode::displayParseTree(int depth, Config *c)
     for (int i = 0; i < depth; i++)
         std::cout << "  ";
 
-    // Check wether self is a terminal or a non terminal
-    if (std::holds_alternative<NONTERMINAL>(self))
-        // Display the string representation of the non terminal
-        std::cout << (c->nonTerminalsStrings[std::get<NONTERMINAL>(self)]) << std::endl;
-    else
-        // Display the string representation of the terminal
-        std::cout << (c->terminalsStrings[std::get<TERMINAL>(self)]) << std::endl;
+    if (depth >= 0) {
+
+        // Check wether self is a terminal or a non terminal
+        if (std::holds_alternative<NONTERMINAL>(self))
+            // Display the string representation of the non terminal
+            std::cout << (c->nonTerminalsStrings[std::get<NONTERMINAL>(self)]) << std::endl;
+        else {
+            // Display the string representation of the terminal and return (no children to display)
+            std::cout << (c->terminalsStrings[std::get<TERMINAL>(self)]) << std::endl;
+            return;
+        }
+
+    }
     
-    // Iterate over children, starting by the leftmost one
-    for (auto it = children.rbegin(); it != children.rend(); ++it)
-        it->displayParseTree(depth + 1, c);
+
+    if (children.empty()) {
+        // If no children, empty rhs of production (Ɛ)
+        for (int i = 0; i <= depth; i++)
+            std::cout << "  ";
+        std::cout << "Ɛ" << std::endl;
+    } else {
+        // Iterate over children, starting by the leftmost one
+        for (auto it = children.rbegin(); it != children.rend(); ++it)
+            it->displayParseTree(depth + 1, c);
+    }
 }
 
 std::queue<ParseTreeNode> ParseTreeNode::popNNextNodes(int n)
@@ -55,8 +69,6 @@ std::queue<ParseTreeNode> ParseTreeNode::popNNextNodes(int n)
 void ParseTreeNode::acceptTree(Config *c, NONTERMINAL cfgStartSymbol)
 {
     DEBUG_MSG("ParseTreeNode::acceptTree()");
-    // Display the tree starting from the root
-    this->self = cfgStartSymbol;
-    displayParseTree(0, c);
+    displayParseTree(-1, c);
     DEBUG_MSG("ParseTreeNode::acceptTree() - Displayed");
 }

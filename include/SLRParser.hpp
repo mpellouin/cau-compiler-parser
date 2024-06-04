@@ -12,6 +12,7 @@
 #include <vector>
 #include <unordered_map>
 #include <queue>
+#include <numeric>
 
 #include "debug.hpp"
 #include "Config.hpp"
@@ -40,6 +41,15 @@ namespace buparser {
             CFG *_cfg;
             // Initialized as PROGRAM (corresponding to S' in a CFG with S' -> S)
             ParseTreeNode _parseTree {NONTERMINAL::PROGRAM};
+
+            /**
+             * @brief Generates a report for the exception
+             * 
+             * @param state 
+             * @param tokenString 
+             * @return std::string 
+             */
+            std::string generateReport(int state, std::string tokenString);
     };
 }
 
