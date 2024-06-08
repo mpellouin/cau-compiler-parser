@@ -28,7 +28,7 @@ TERMINAL Config::getTerminal(std::string terminal)
 NONTERMINAL Config::getNonTerminal(std::string nt)
 {
     // We do not count the last element of the array as it is only here for displaying correctly the ParseTree
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 17; i++) {
         if (this->nonTerminalsStrings[i] == nt)
             return static_cast<NONTERMINAL>(i);
     }

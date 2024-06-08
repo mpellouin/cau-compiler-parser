@@ -102,7 +102,7 @@ void buparser::SLRParser::validate(std::queue<std::string> input)
             } else if (action.first == ActionType::ACCEPT) {
                 DEBUG_MSG("Accepted");
                 // If slrParsing is accepted accept the tree (display it)
-                _parseTree.acceptTree(_cfg->config, _cfg->getProductionLHS(0));
+                _parseTree.displayParseTree(-1, _cfg->config);
                 return;
             }
         }

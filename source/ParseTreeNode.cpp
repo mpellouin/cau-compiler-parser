@@ -65,10 +65,3 @@ std::queue<ParseTreeNode> ParseTreeNode::popNNextNodes(int n)
     }
     return nodes;
 }
-
-void ParseTreeNode::acceptTree(Config *c, NONTERMINAL cfgStartSymbol)
-{
-    DEBUG_MSG("ParseTreeNode::acceptTree()");
-    displayParseTree(-1, c);
-    DEBUG_MSG("ParseTreeNode::acceptTree() - Displayed");
-}

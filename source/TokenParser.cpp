@@ -17,7 +17,7 @@ buparser::TokenParser::~TokenParser()
 std::queue<std::string> buparser::TokenParser::parse()
 {
     // Check if the filepath is valid and get the ifstream if it is
-    std::ifstream file = this->isFilepathValid();
+    std::ifstream file = this->_isFilepathValid();
     std::string line;
     int line_number = 0;
 
@@ -25,7 +25,7 @@ std::queue<std::string> buparser::TokenParser::parse()
     while (std::getline(file, line)) {
         DEBUG_MSG("bustream::TokenParser::parse() -> Line " << line_number << ": " << line);
         // Parse the line
-        this->parseLine(line);
+        this->_parseLine(line);
         line_number++;
     }
 
@@ -34,7 +34,7 @@ std::queue<std::string> buparser::TokenParser::parse()
     return this->_tokens;
 }
 
-std::ifstream buparser::TokenParser::isFilepathValid()
+std::ifstream buparser::TokenParser::_isFilepathValid()
 {
     // Creates ifstream object from the filepath
     std::ifstream file(this->_filepath);
@@ -47,7 +47,7 @@ std::ifstream buparser::TokenParser::isFilepathValid()
     return file;
 }
 
-void buparser::TokenParser::parseLine(std::string line)
+void buparser::TokenParser::_parseLine(std::string line)
 {
     std::istringstream iss(line);
     std::string token;

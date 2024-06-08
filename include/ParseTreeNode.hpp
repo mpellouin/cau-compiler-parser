@@ -37,22 +37,14 @@ class ParseTreeNode {
         std::queue<ParseTreeNode> popNNextNodes(int n);
 
         /**
-         * @brief Sets the start symbol of the CFG and displays the parse tree
-         * 
-         * @param c 
-         * @param cfgStartSymbol 
-         */
-        void acceptTree(Config *c, NONTERMINAL cfgStartSymbol);
-
-    protected:
-    private:
-        /**
          * @brief Displays the parse tree
          * 
          * @param depth - depth of the tree, used for recursion
          * @param c 
          */
         void displayParseTree(int depth, Config *c);
+    protected:
+    private:
 };
 
 #endif /* !PARSETREE_HPP_ */

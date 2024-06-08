@@ -35,14 +35,14 @@ namespace buparser {
          * 
          * @return std::ifstream 
          */
-        std::ifstream isFilepathValid();
+        std::ifstream _isFilepathValid();
 
         /**
          * @brief Adds the tokens from the line to the token queue
          * 
          * @param line 
          */
-        void parseLine(std::string line);
+        void _parseLine(std::string line);
 
 
 

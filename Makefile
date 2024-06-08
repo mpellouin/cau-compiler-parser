@@ -28,35 +28,16 @@ OBJ_DIR := ./build
 SOURCES_SUB_DIRS := $(shell find $(SRC_DIR) -type d)
 OBJECTS_SUB_DIRS := $(SOURCES_SUB_DIRS:$(SRC_DIR)%=$(OBJ_DIR)%)
 
-ifeq ($(MAKECMDGOALS), tests_run)
-  SOURCES := $(shell find $(SRC_DIR) -type f -not -wholename "*/main.cpp" -name "*.cpp")
-else
-  SOURCES := $(shell find $(SRC_DIR) -type f -name "*.cpp")
-endif
+
+SOURCES := $(shell find $(SRC_DIR) -type f -name "*.cpp")
 
 OBJECTS := $(SOURCES:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 DEPS    := $(SOURCES:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.d)
 
-TEST_SRC_DIR := ./test
-TEST_OBJ_DIR := ./test_build
-
-TEST_SOURCES_SUB_DIRS := $(shell find $(TEST_SRC_DIR) -type d)
-TEST_OBJECTS_SUB_DIRS := $(TEST_SOURCES_SUB_DIRS:$(TEST_SRC_DIR)%=$(TEST_OBJ_DIR)%)
-
-TEST_SOURCES := $(shell find $(TEST_SRC_DIR) -type f -name "*.cpp")
-TEST_OBJECTS := $(TEST_SOURCES:$(TEST_SRC_DIR)/%.cpp=$(TEST_OBJ_DIR)/%.o)
-
-ifeq ($(MAKECMDGOALS), tests_run)
-  CXX           := g++
-  CXX_WARNINGS  := -Wall -Wextra -Wpedantic -Wno-unused-variable
-  CXXFLAGS      := -fprofile-arcs -ftest-coverage
-  LDFLAGS       := -lgcov -lcriterion
-else
-  CXX           := g++
-  CXX_WARNINGS  := -Wall -Wextra -Wpedantic
-  CXXFLAGS      := -std=c++20
-  LDFLAGS       := -lpthread -lrt
-endif
+CXX           := g++
+CXX_WARNINGS  := -Wall -Wextra -Wpedantic
+CXXFLAGS      := -std=c++20
+LDFLAGS       := -lpthread -lrt
 
 CXX_DEPS      =   -MT $(OBJ_DIR)/$*.o -MP -MMD  -MF $(OBJ_DIR)/$*.d
 CXX_DEBUG     :=  -g3 -ggdb3
@@ -92,42 +73,27 @@ $(NAME): $(OBJECTS)
 > @ $(CXX) $^ $(LDFLAGS) -o $@
 > @ printf "$(ORANGE)$@ linking success\n$(WHITE)"
 
-tests_run: $(OBJECTS) $(TEST_OBJECTS)
-> @$(CXX) $(OBJECTS) $(TEST_OBJECTS) $(LDFLAGS) -o test
-> @ printf "$(ORANGE)Gonna launch criterion tests\n$(WHITE)"
-> ./test
-
-tests_recap:
-> @ printf "$(ORANGE)$(BOLD)Tests recap:$(WHITE)\n"
-> gcovr --exclude tests --exclude include
-> gcovr --exclude tests --exclude include --branches
-
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJECTS_SUB_DIRS)
-> @$(CXX) $(CXXFLAGS) $(CXX_DEPS) -c $< -o $@
-> @ printf "$(DARK_BLUE)Compiling [$(CYAN)$@$(WHITE)$(DARK_BLUE)]$(WHITE)\n"
-
-$(TEST_OBJ_DIR)/%.o: $(TEST_SRC_DIR)/%.cpp | $(TEST_OBJECTS_SUB_DIRS)
 > @$(CXX) $(CXXFLAGS) $(CXX_DEPS) -c $< -o $@
 > @ printf "$(DARK_BLUE)Compiling [$(CYAN)$@$(WHITE)$(DARK_BLUE)]$(WHITE)\n"
 
 $(OBJECTS_SUB_DIRS):
 > @$(MKDIR) $(OBJECTS_SUB_DIRS)
 
-$(TEST_OBJECTS_SUB_DIRS):
-> @$(MKDIR) $(TEST_OBJECTS_SUB_DIRS)
+
+test:
+> @$(SHELL) ./functional_tests.sh
 
 clean:
 > @$(RMDIR) $(OBJ_DIR)
-> @$(RMDIR) $(TEST_OBJ_DIR)
 > @ printf "$(RED)Removing object files.$(WHITE)\n"
 
 fclean: clean
 > @$(RM) $(NAME)
-> @$(RM) $(TEST_OBJ_DIR)
 > @ printf "$(RED)Removing binary file.$(WHITE)\n"
 
 re: fclean all
 
 -include $(DEPS)
 
-.PHONY: all tests_run clean fclean re
+.PHONY: all test clean fclean re
