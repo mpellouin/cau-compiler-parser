@@ -120,3 +120,7 @@ One of the easy way to improve this program would be by generating the LR parsin
 This would imply some changes however since the enums would not contain the same terminal and non-terminals anymore.
 
 Creating a clearer view of the parse tree would globally improve this parser.
+
+## Final grade
+
+This project received a 10/10 counting for 10% of the final grade of the Compiler class.
